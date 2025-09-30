@@ -28,9 +28,9 @@ jobs:
 
     - name: Prepare Dependency Walker
       run: |
-        mkdir "%LOCALAPPDATA%\Nuitka\Nuitka\Cache\depends\x86_64"
-        curl -L -o "%LOCALAPPDATA%\Nuitka\Nuitka\Cache\depends\x86_64\depends.zip" "https://dependencywalker.com/depends22_x64.zip"
-        powershell -Command "Expand-Archive '%LOCALAPPDATA%\Nuitka\Nuitka\Cache\depends\x86_64\depends.zip' '%LOCALAPPDATA%\Nuitka\Nuitka\Cache\depends\x86_64\'"
+        mkdir "%LOCALAPPDATA%\Nuitka\Nuitka\Cache\downloads\depends\x86_64"
+        curl -L -o "%LOCALAPPDATA%\Nuitka\Nuitka\Cache\downloads\depends\x86_64\depends.zip" "https://dependencywalker.com/depends22_x64.zip"
+        powershell -Command "Expand-Archive '%LOCALAPPDATA%\Nuitka\Nuitka\Cache\downloads\depends\x86_64\depends.zip' '%LOCALAPPDATA%\Nuitka\Nuitka\Cache\downloads\depends\x86_64\'"
 
     - name: Build with Nuitka
       
