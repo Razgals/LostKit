@@ -31,7 +31,7 @@ jobs:
         python -m nuitka main.py --assume-yes-for-downloads --onefile --standalone --enable-plugin=pyqt6 --windows-icon-from-ico=icon.ico --windows-console-mode=disable --include-data-files=icon.ico=icon.ico --include-data-files=button.jpg=button.jpg --include-data-files=RuneScape-Quill.ttf=RuneScape-Quill.ttf --include-data-files=icons/*=icons/ --output-filename=LostKit.exe
 
     - name: Create Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v1
         with:
           tag_name: main-${{ github.sha }}
           name: "Build from main (${{ github.sha }})"
