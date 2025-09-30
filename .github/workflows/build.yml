@@ -11,8 +11,6 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-    env:
-      NUITKA_AUTO_DOWNLOAD_DEPENDS: 1
 
     steps:
     - name: Checkout repository
@@ -22,6 +20,16 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
+        
+    - name: Prepare Dependency Walker
+      run: |
+        mkdir "%LOCALAPPDATA%\Nuitka\Nuitka\Cache\downloads\depends\x86_64"
+        curl -L -o "%LOCALAPPDATA%\Nuitka\Nuitka\Cache\downloads\depends\x86_64\depends.zip" "https://dependencywalker.com/depends22_x64.zip"
+        powershell -Command "Expand-Archive '%LOCALAPPDATA%\Nuitka\Nuitka\Cache\downloads\depends\x86_64\depends.zip' '%LOCALAPPDATA%\Nuitka\Nuitka\Cache\downloads\depends\x86_64\'"
+        if (Test-Path "$env:LOCALAPPDATA\Nuitka\Nuitka\Cache\downloads\depends\x86_64\depends22_x64\depends.exe") {
+            Move-Item "$env:LOCALAPPDATA\Nuitka\Nuitka\Cache\downloads\depends\x86_64\depends22_x64\depends.exe" "$env:LOCALAPPDATA\Nuitka\Nuitka\Cache\downloads\depends\x86_64\depends.exe"
+        }
+
 
     - name: Install dependencies
       run: |
