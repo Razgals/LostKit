@@ -24,7 +24,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install nuitka pyqt6
+        pip install nuitka PyQt6 PyQt6-Qt6 PyQt6-WebEngine
 
     - name: Build executable with Nuitka
       run: |
