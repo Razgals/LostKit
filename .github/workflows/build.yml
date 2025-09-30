@@ -1,5 +1,8 @@
 name: Build LostKit
 
+env:
+  NUITKA_ALLOW_DOWNLOADING_DEPENDS: 1
+
 on:
   push:
     branches:
@@ -28,6 +31,7 @@ jobs:
 
     - name: Build with Nuitka
       run: |
+        set NUITKA_ALLOW_DOWNLOADING_DEPENDS=1
         python -m nuitka main.py --onefile --standalone --enable-plugin=pyqt6 --windows-icon-from-ico=icon.ico --windows-console-mode=disable --include-data-files=icon.ico=icon.ico --include-data-files=button.jpg=button.jpg --include-data-files=RuneScape-Quill.ttf=RuneScape-Quill.ttf --include-data-files=icons/*=icons/ --output-filename=LostKit.exe
 
     - name: Upload build artifact
