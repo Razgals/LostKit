@@ -1,0 +1,47 @@
+name: Build LostKit
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.13'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install nuitka pyqt6
+
+    - name: Build with Nuitka
+      run: |
+        python -m nuitka main.py \
+          --onefile \
+          --standalone \
+          --enable-plugin=pyqt6 \
+          --windows-icon-from-ico=icon.ico \
+          --windows-console-mode=disable \
+          --include-data-files=icon.ico=icon.ico \
+          --include-data-files=button.jpg=button.jpg \
+          --include-data-files=RuneScape-Quill.ttf=RuneScape-Quill.ttf \
+          --include-data-files=icons/*=icons/ \
+          --output-filename=LostKit.exe
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: LostKit
+        path: LostKit.exe
