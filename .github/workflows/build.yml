@@ -26,12 +26,17 @@ jobs:
         python -m pip install --upgrade pip
         pip install nuitka pyqt6
 
-    - name: Build with Nuitka
+    - name: Build executable with Nuitka
       run: |
         python -m nuitka main.py --assume-yes-for-downloads --onefile --standalone --enable-plugin=pyqt6 --windows-icon-from-ico=icon.ico --windows-console-mode=disable --include-data-files=icon.ico=icon.ico --include-data-files=button.jpg=button.jpg --include-data-files=RuneScape-Quill.ttf=RuneScape-Quill.ttf --include-data-files=icons/*=icons/ --output-filename=LostKit.exe
 
-    - name: Upload build artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: LostKit
-        path: LostKit.exe
+    - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: main-${{ github.sha }}
+          name: "Build from main (${{ github.sha }})"
+          body: "Automated build from push to main."
+          files: |
+            LostKit.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
