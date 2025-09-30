@@ -11,8 +11,7 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-    env:
-        NUITKA_ALLOW_DOWNLOADING_DEPENDS: 1
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
@@ -27,10 +26,16 @@ jobs:
         python -m pip install --upgrade pip
         pip install nuitka pyqt6
 
+    - name: Prepare Dependency Walker
+      run: |
+        mkdir "%LOCALAPPDATA%\Nuitka\Nuitka\Cache\DependencyWalker"
+        curl -L -o "%LOCALAPPDATA%\Nuitka\Nuitka\Cache\DependencyWalker\depends.zip" "https://dependencywalker.com/depends22_x64.zip"
+        powershell -Command "Expand-Archive '%LOCALAPPDATA%\Nuitka\Nuitka\Cache\DependencyWalker\depends.zip' '%LOCALAPPDATA%\Nuitka\Nuitka\Cache\DependencyWalker\'"
+
+
     - name: Build with Nuitka
       
       run: |
-        set NUITKA_ALLOW_DOWNLOADING_DEPENDS=1
         python -m nuitka main.py --onefile --standalone --enable-plugin=pyqt6 --windows-icon-from-ico=icon.ico --windows-console-mode=disable --include-data-files=icon.ico=icon.ico --include-data-files=button.jpg=button.jpg --include-data-files=RuneScape-Quill.ttf=RuneScape-Quill.ttf --include-data-files=icons/*=icons/ --output-filename=LostKit.exe
 
     - name: Upload build artifact
