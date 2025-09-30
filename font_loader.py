@@ -14,8 +14,14 @@ class FontLoader:
     def load_custom_font(self):
         """Load the custom TTF font from the application directory"""
         try:
-            # Look for TTF files in current directory
-            app_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
+            # Determine correct app directory
+            if getattr(sys, "frozen", False):
+                # Running as a standalone exe
+                app_dir = os.path.dirname(sys.executable)
+            else:
+                # Running as a script
+                app_dir = os.path.dirname(os.path.abspath(__file__))
+                
             ttf_files = [f for f in os.listdir(app_dir) if f.lower().endswith('.ttf')]
             
             if not ttf_files:
