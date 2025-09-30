@@ -11,6 +11,8 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    env:
+      NUITKA_AUTO_DOWNLOAD_DEPENDS: 1
 
     steps:
     - name: Checkout repository
@@ -25,12 +27,6 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install nuitka pyqt6
-
-    - name: Prepare Dependency Walker
-      run: |
-        mkdir "%LOCALAPPDATA%\Nuitka\Nuitka\Cache\downloads\depends\x86_64"
-        curl -L -o "%LOCALAPPDATA%\Nuitka\Nuitka\Cache\downloads\depends\x86_64\depends.zip" "https://dependencywalker.com/depends22_x64.zip"
-        powershell -Command "Expand-Archive '%LOCALAPPDATA%\Nuitka\Nuitka\Cache\downloads\depends\x86_64\depends.zip' '%LOCALAPPDATA%\Nuitka\Nuitka\Cache\downloads\depends\x86_64\'"
 
     - name: Build with Nuitka
       
