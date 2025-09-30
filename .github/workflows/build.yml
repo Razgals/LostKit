@@ -19,7 +19,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.13'
+        python-version: '3.11'
 
     - name: Install dependencies
       run: |
@@ -28,10 +28,9 @@ jobs:
 
     - name: Prepare Dependency Walker
       run: |
-        mkdir "%LOCALAPPDATA%\Nuitka\Nuitka\Cache\DependencyWalker"
-        curl -L -o "%LOCALAPPDATA%\Nuitka\Nuitka\Cache\DependencyWalker\depends.zip" "https://dependencywalker.com/depends22_x64.zip"
-        powershell -Command "Expand-Archive '%LOCALAPPDATA%\Nuitka\Nuitka\Cache\DependencyWalker\depends.zip' '%LOCALAPPDATA%\Nuitka\Nuitka\Cache\DependencyWalker\'"
-
+        mkdir "%LOCALAPPDATA%\Nuitka\Nuitka\Cache\depends\x86_64"
+        curl -L -o "%LOCALAPPDATA%\Nuitka\Nuitka\Cache\depends\x86_64\depends.zip" "https://dependencywalker.com/depends22_x64.zip"
+        powershell -Command "Expand-Archive '%LOCALAPPDATA%\Nuitka\Nuitka\Cache\depends\x86_64\depends.zip' '%LOCALAPPDATA%\Nuitka\Nuitka\Cache\depends\x86_64\'"
 
     - name: Build with Nuitka
       
