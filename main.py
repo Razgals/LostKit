@@ -6,7 +6,7 @@ import os
 import atexit
 from PyQt6.QtWidgets import QApplication, QMessageBox
 from PyQt6.QtCore import Qt, QDir, QStandardPaths
-from PyQt6.QtGui import QFont
+from PyQt6.QtGui import QFont, QIcon
 
 # Import your main window class
 from main_window import MainWindow
@@ -132,6 +132,7 @@ def main():
         # Create and show main window
         print("Creating main window...")
         main_window = MainWindow()
+        main_window.setWindowIcon(QIcon("icon.ico"))
         main_window.show()
         print("Main window created and shown")
         
